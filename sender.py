@@ -33,7 +33,7 @@ def main():
     with EmailClient(args.servername, args.port, enable_ssl=False) as server:
         for subdir, dirs, files in os.walk(args.directory):
             for filename in files:
-                with open(filename, 'r') as mail_fd:
+                with open(os.path.join(subdir, filename), 'r') as mail_fd:
                     mail_obj = email.message_from_file(mail_fd)
                     # Add log
                     server.sendmail(mail_obj)
