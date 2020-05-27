@@ -30,7 +30,7 @@ def main():
 
     args = handle_arg()
 
-    with EmailClient(args.hostname, args.port, enable_ssl=False) as server:
+    with EmailClient(args.servername, args.port, enable_ssl=False) as server:
         for subdir, dirs, files in os.walk(args.directory):
             for filename in files:
                 with open(filename, 'r') as mail_fd:
