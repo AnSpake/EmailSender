@@ -46,5 +46,5 @@ class EmailClient():
         """
         self.server.quit()
 
-    def __exit__(self, exec_type, exec_value, tb):
+    def __exit__(self, exec_type, exec_value, traceback):
         self.quit()
