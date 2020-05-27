@@ -35,7 +35,7 @@ class EmailClient():
         """
         self.server.sendmail(fetch_email_addr(email_obj['Sender']),
                              fetch_email_addr(email_obj['To']),
-                             email_obj.as_string())
+                             email_obj.as_string().encode("latin"))
 
     def __enter__(self):
         return self
