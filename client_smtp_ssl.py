@@ -14,7 +14,9 @@ class EmailServer():
 
         if enable_ssl:
             self.context = ssl.create_default_context()
-        self.server = smtplib.SMTP_SSL(hostname, port, context=self.context)
+            self.server = smtplib.SMTP_SSL(hostname, port, context=self.context)
+        else:
+            self.server = smtplib.SMTP(hostname, port)
 
     def sendmail(self, email_obj):
         self.server.sendmail(email_obj['Sender']
