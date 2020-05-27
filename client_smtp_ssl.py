@@ -3,6 +3,9 @@
 from smtpd import SMTPServer
 import smtplib, ssl
 
+def fetch_email_addr(full_msg):
+    return full_msg[full_msg.find('<') + 1:full_msg.find('>')]
+
 class EmailServer():
     """
         Secure SMTP Server
@@ -19,8 +22,8 @@ class EmailServer():
             self.server = smtplib.SMTP(hostname, port)
 
     def sendmail(self, email_obj):
-        self.server.sendmail(email_obj['Sender']
-                            , email_obj['To']
+        self.server.sendmail(fetch_email_addr(email_obj['Sender'])
+                            , fetch_email_addr(email_obj['To'])
                             , email_obj.as_string())
 
     def __enter__(self):
