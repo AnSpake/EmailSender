@@ -6,12 +6,6 @@ import email
 import argparse
 from client_smtp_ssl import EmailClient
 
-# TODO: Launch SMTP server
-# python -m smtpd -n -c DebuggingServer localhost:465
-SMTP_HOSTNAME = "localhost"
-SMTP_PORT = 465
-
-
 def handle_arg():
     """
         Parse CLI arguments
@@ -21,13 +15,12 @@ def handle_arg():
                         help="The directory containing the emails to send")
     parser.add_argument('-p', '--port', required=False, type=int, default=587,
                         help="SMTP client port")
-    parser.add_argument('-h', '--hostname', required=False, type=str,
+    parser.add_argument('-s', '--servername', required=False, type=str,
                         default="localhost",
-                        help="SMTP client hostname")
+                        help="SMTP client servername")
 
     args = parser.parse_args()
     return args
-
 
 def main():
     """
