@@ -19,6 +19,10 @@ def handle_arg():
     parser = argparse.ArgumentParser()
     parser.add_argument('-d', '--directory', required=True,
                         help="The directory containing the emails to send")
+    parser.add_argument('-p', '--port', required=False, default=587,
+                        help="SMTP client port")
+    parser.add_argument('-h', '--hostname', required=False, default="localhost"
+                        help="SMTP client hostname")
 
     args = parser.parse_args()
     return args
@@ -31,7 +35,7 @@ def main():
 
     args = handle_arg()
 
-    with EmailClient(SMTP_HOSTNAME, SMTP_PORT, enable_ssl=False) as server:
+    with EmailClient(args.hostname, args.port, enable_ssl=False) as server:
         # TODO: iterate for each email in test folder
         with open("test/test-2.eml", 'r') as mail_fd:
             mail_obj = email.message_from_file(mail_fd)
