@@ -19,9 +19,10 @@ def handle_arg():
     parser = argparse.ArgumentParser()
     parser.add_argument('-d', '--directory', required=True,
                         help="The directory containing the emails to send")
-    parser.add_argument('-p', '--port', required=False, default=587,
+    parser.add_argument('-p', '--port', required=False, type=int, default=587,
                         help="SMTP client port")
-    parser.add_argument('-h', '--hostname', required=False, default="localhost"
+    parser.add_argument('-h', '--hostname', required=False, type=str,
+                        default="localhost",
                         help="SMTP client hostname")
 
     args = parser.parse_args()
