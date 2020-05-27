@@ -1,14 +1,13 @@
 #!/usr/bin/env python3
 
-from smtpd import SMTPServer
 import smtplib, ssl
 
 def fetch_email_addr(full_msg):
     return full_msg[full_msg.find('<') + 1:full_msg.find('>')]
 
-class EmailServer():
+class EmailClient():
     """
-        Secure SMTP Server
+        Secure SMTP Client
     """
 
     def __init__(self, hostname, port, enable_ssl : bool =False):
