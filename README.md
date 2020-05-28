@@ -18,7 +18,8 @@ Additional information about SMTP port:
 There is 4 commonly used ports.
  - 25: (oldest), it should be already be used so you don't want to use it.
    It's a relay port, another reason why you don't want to use it for smtp submissions.
- - 587: default port for smtp submission, support TLS.
+ - 587: default port for smtp submission, support TLS.  
+        Use this port if you want SMTP packet to be shown on your pcap.
  - 465: used for SMTPS (SMTP over SSL), depreciated.
  - 2525: unoffical, used when 587 is busy.
 
