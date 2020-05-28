@@ -17,11 +17,11 @@ class EmailClient():
         Secure SMTP Client
     """
 
-    def __init__(self, hostname, port, enable_ssl: bool = False):
+    def __init__(self, hostname, port, secure: bool = False):
         self.hostname = hostname
         self.port = port
 
-        if enable_ssl:
+        if secure:
             self.context = ssl.create_default_context()
             self.server = smtplib.SMTP_SSL(hostname,
                                            port,
