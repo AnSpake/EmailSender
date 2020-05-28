@@ -3,7 +3,6 @@ Simple python script to send IMF formatted emails.
 
 # Prerequisite
 > pip3 install -r requirements.txt
-> mkcert localhost
 
 # How to use
 Launch a server in one terminal (replace hostname and port):
@@ -24,5 +23,8 @@ There is 4 commonly used ports.
  - 2525: unoffical, used when 587 is busy.
 
 # Under construction
-SSL SMTP Server
+Prerequisite
+> mkcert localhost
+
+Launch SSL SMTP Server
 > ./server_smtp.py
