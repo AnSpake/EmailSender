@@ -6,7 +6,7 @@ Launch a server in one terminal (replace hostname and port):
 > python -m smtpd -n -c DebuggingServer hostname:port
 
 Launch a client in another:
-> ./sender.py
+> ./sender.py -d directory_path [-s servername] [-p port]
 
 # Edit
 You can edit the hostname and port for your smtp client in sender.py.
