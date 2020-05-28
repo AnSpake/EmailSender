@@ -22,3 +22,7 @@ There is 4 commonly used ports.
  - 587: default port for smtp submission, support TLS.
  - 465: used for SMTPS (SMTP over SSL), depreciated.
  - 2525: unoffical, used when 587 is busy.
+
+# Under construction
+SSL SMTP Server
+> ./server_smtp.py
