@@ -5,7 +5,7 @@ import os
 import sys
 import email
 import argparse
-from client_smtp_ssl import EmailClient
+from client_smtp import EmailClient
 
 
 def handle_arg():
