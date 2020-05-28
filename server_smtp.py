@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# pylint: disable=missing-module-docstring
 # pylint: disable=fixme
 
 import sys
@@ -13,8 +14,8 @@ class EmailServer(SMTPServer):
         self.server = None
 
     def start(self):
-        self.server = SMTPServer((self.hostname, self.port),
-                                 (self.hostname, self.port),
+        self.server = SMTPServer(localaddr=(self.hostname, self.port),
+                                 remoteaddr=(self.hostname, self.port),
                                  ssl=True,
                                  certfile="localhost.pem",
                                  keyfile="localhost-key.pem")
