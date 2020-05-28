@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# pylint: disable=fixme
 
 import sys
 import asyncore
@@ -19,8 +20,9 @@ class EmailServer(SMTPServer):
                                  keyfile="localhost-key.pem")
         asyncore.loop()
 
-    def process_message(self, peer, mailfrom, rcpttos, message_data):
-        print(message_data)
+    # TODO: investigate
+    # def process_message(self, peer, mailfrom, rcpttos, message_data):
+    #    print(message_data)
 
 
 def main():
