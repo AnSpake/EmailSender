@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 # pylint: disable=missing-module-docstring
+# pylint: disable=missing-function-docstring
+# pylint: disable=missing-class-docstring
+# pylint: disable=super-init-not-called
+# pylint: disable=abstract-method
 # pylint: disable=fixme
 
 import sys
@@ -14,6 +18,7 @@ class EmailServer(SMTPServer):
         self.server = None
 
     def start(self):
+        print(self.hostname)
         self.server = SMTPServer(localaddr=(self.hostname, self.port),
                                  remoteaddr=(self.hostname, self.port),
                                  ssl=True,
