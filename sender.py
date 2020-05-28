@@ -20,6 +20,9 @@ def handle_arg():
     parser.add_argument('-s', '--servername', required=False, type=str,
                         default="localhost",
                         help="SMTP client servername")
+    parser.add_argument('--ssl', required=False, action="store_true",
+                        default=False,
+                        help="Use a secure SMTP client")
 
     args = parser.parse_args()
     return args
