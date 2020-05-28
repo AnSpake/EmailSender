@@ -1,6 +1,10 @@
 # EmailSender
 Simple python script to send IMF formatted emails.
 
+# Prerequisite
+> pip3 install -r requirements.txt
+> mkcert localhost
+
 # How to use
 Launch a server in one terminal (replace hostname and port):
 > python -m smtpd -n -c DebuggingServer hostname:port
