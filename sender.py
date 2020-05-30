@@ -5,6 +5,7 @@ import os
 import sys
 import email
 import argparse
+from email.message import EmailMessage
 from client_smtp import EmailClient
 
 
@@ -23,6 +24,9 @@ def handle_arg():
     parser.add_argument('--ssl', required=False, action="store_true",
                         default=False,
                         help="Use a secure SMTP client")
+    parser.add_argument('-a', '--attachment', required=False,
+                        action="store_true", default=False,
+                        help="Read attachment folder")
 
     args = parser.parse_args()
     return args
@@ -36,12 +40,15 @@ def main():
     args = handle_arg()
 
     with EmailClient(args.servername, args.port, secure=args.ssl) as server:
-        for subdir, _, files in os.walk(args.directory):
-            for filename in files:
-                with open(os.path.join(subdir, filename), 'r') as mail_fd:
-                    mail_obj = email.message_from_file(mail_fd)
+        for filename in os.listdir(args.directory):
+            file_path = os.path.join(args.directory, filename)
+
+            if os.path.isfile(file_path):
+                with open(file_path, 'r') as file_fd:
+                    mail_obj = email.message_from_file(file_fd,
+                                                       _class=EmailMessage)
                     # Add log
-                    server.sendmail(mail_obj)
+                    server.sendmail(mail_obj, args)
 
 
 if __name__ == "__main__":
