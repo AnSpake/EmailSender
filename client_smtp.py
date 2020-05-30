@@ -32,14 +32,13 @@ class EmailClient():
         else:
             self.server = smtplib.SMTP(hostname, port)
 
-    def sendmail(self, email_obj, subdir, attachment):
+    def sendmail(self, email_obj, args):
         """
             Wrapper for sendmail
         """
-        import pdb
-        if attachment:
+        if args.attachment:
             email_obj = self.mail_to_multipart(email_obj)
-            self.handle_attachment(email_obj, subdir)
+            self.handle_attachment(email_obj, args.directory)
         self.server.sendmail(fetch_email_addr(email_obj['Sender']),
                              fetch_email_addr(email_obj['To']),
                              email_obj.as_string().encode("latin"))
@@ -54,7 +53,8 @@ class EmailClient():
             return mail
 
         mail_multi = MIMEMultipart("mixed")
-        headers = list((k, v) for (k, v) in mail.items() if k not in ("Content-Type", "Content-Transfer-Encoding"))
+        headers = list((k, v) for (k, v) in mail.items() \
+                  if k not in ("Content-Type", "Content-Transfer-Encoding"))
 
         for k, v in headers:
             mail_multi[k] = v
@@ -65,12 +65,12 @@ class EmailClient():
         mail_multi.attach(mail)
         return mail_multi
 
-    def handle_attachment(self, email_obj, subdir):
+    def handle_attachment(self, email_obj, directory):
         """
             Parse attachment and include it in the email
         """
         # Every attachment are in the args.directory/attachment
-        attach_path = os.path.join(subdir,
+        attach_path = os.path.join(directory,
                                    "attachment",
                                    email_obj['Attachment'])
         mime_type, encoding = mimetypes.guess_type(attach_path)
