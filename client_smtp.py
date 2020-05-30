@@ -111,7 +111,7 @@ class EmailClient():
             handle_attachment(email_obj, args.directory)
         self.server.sendmail(fetch_email_addr(email_obj['Sender']),
                              fetch_email_addr(email_obj['To']),
-                             email_obj.as_string().encode("latin"))
+                             email_obj.as_string().encode("latin", 'ignore'))
 
     def __enter__(self):
         return self
