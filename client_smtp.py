@@ -33,9 +33,17 @@ class EmailClient():
         """
             Wrapper for sendmail
         """
+        if 'Attachment' in email_obj:
+            self.handle_attachment(email_obj)
         self.server.sendmail(fetch_email_addr(email_obj['Sender']),
                              fetch_email_addr(email_obj['To']),
                              email_obj.as_string().encode("latin"))
+
+    def handle_attachment(email_obj):
+        """
+            Parse attachment and include it in the email
+        """
+        pass
 
     def __enter__(self):
         return self
