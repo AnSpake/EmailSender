@@ -9,7 +9,13 @@ Launch a server in one terminal (replace hostname and port):
 > python -m smtpd -n -c DebuggingServer hostname:port
 
 Launch a client in another:
-> ./sender.py -d directory_path [-s servername] [-p port] [--ssl]
+> ./sender.py -d directory_path [-s servername] [-p port] [--ssl] [-a|--attachment]
+
+If using the 'attachment' option, your folder needs to contain a "attachment" folder
+containing all your attachment. Your mails also need to have a "Attachment" header
+like in the example below:
+
+> Attachment: picture.png
 
 # Edit
 You can edit the hostname and port for your smtp client in sender.py.
