@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 # pylint: disable=missing-docstring
 
-import smtplib
+import os
 import ssl
+import smtplib
+from email.mime.application import MIMEApplication
 
 
 def fetch_email_addr(full_msg):
@@ -29,21 +31,32 @@ class EmailClient():
         else:
             self.server = smtplib.SMTP(hostname, port)
 
-    def sendmail(self, email_obj):
+    def sendmail(self, email_obj, subdir):
         """
             Wrapper for sendmail
         """
         if 'Attachment' in email_obj:
-            self.handle_attachment(email_obj)
+            self.handle_attachment(email_obj, subdir)
         self.server.sendmail(fetch_email_addr(email_obj['Sender']),
                              fetch_email_addr(email_obj['To']),
                              email_obj.as_string().encode("latin"))
 
-    def handle_attachment(email_obj):
+    def handle_attachment(email_obj, subdir):
         """
             Parse attachment and include it in the email
         """
-        pass
+        # Every attachment are in the args.directory/attachment
+        attach_path = os.path.join(subdir,
+                                   "attachment",
+                                   email_obj['Attachment'])
+        _, attach_extension = os.path.splitext(attach_path)
+        with open(attach_path, 'r') as attach_fd:
+            attach_raw = MIMEApplication(attach_fd.read(),
+                                         _subtype=attach_extension)
+        attach_raw.add_header('Content-Disposition',
+                              'attachment',
+                              filename=email_obj['Attachment'])
+        email_obj.attach(attach_raw)
 
     def __enter__(self):
         return self

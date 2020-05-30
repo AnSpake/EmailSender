@@ -41,7 +41,7 @@ def main():
                 with open(os.path.join(subdir, filename), 'r') as mail_fd:
                     mail_obj = email.message_from_file(mail_fd)
                     # Add log
-                    server.sendmail(mail_obj)
+                    server.sendmail(mail_obj, subdir)
 
 
 if __name__ == "__main__":
