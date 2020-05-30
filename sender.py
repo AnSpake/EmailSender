@@ -5,8 +5,8 @@ import os
 import sys
 import email
 import argparse
-from client_smtp import EmailClient
 from email.message import EmailMessage
+from client_smtp import EmailClient
 
 
 def handle_arg():
