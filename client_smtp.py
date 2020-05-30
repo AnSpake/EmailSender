@@ -4,8 +4,9 @@
 import os
 import ssl
 import smtplib
-from email.mime.application import MIMEApplication
-
+import mimetypes
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 def fetch_email_addr(full_msg):
     """
@@ -31,15 +32,38 @@ class EmailClient():
         else:
             self.server = smtplib.SMTP(hostname, port)
 
-    def sendmail(self, email_obj, subdir):
+    def sendmail(self, email_obj, subdir, attachment):
         """
             Wrapper for sendmail
         """
-        if 'Attachment' in email_obj:
+        import pdb
+        if attachment:
+            email_obj = self.mail_to_multipart(email_obj)
             self.handle_attachment(email_obj, subdir)
         self.server.sendmail(fetch_email_addr(email_obj['Sender']),
                              fetch_email_addr(email_obj['To']),
                              email_obj.as_string().encode("latin"))
+
+    def mail_to_multipart(self, mail):
+        """
+            Convert EmailMessage to MIMEMultipart in order to
+            avoid "Attach is not valid on a message with a non-multipart
+            payload"
+        """
+        if mail.is_multipart():
+            return mail
+
+        mail_multi = MIMEMultipart("mixed")
+        headers = list((k, v) for (k, v) in mail.items() if k not in ("Content-Type", "Content-Transfer-Encoding"))
+
+        for k, v in headers:
+            mail_multi[k] = v
+
+        for k, v in headers:
+            del mail[k]
+
+        mail_multi.attach(mail)
+        return mail_multi
 
     def handle_attachment(self, email_obj, subdir):
         """
@@ -49,14 +73,20 @@ class EmailClient():
         attach_path = os.path.join(subdir,
                                    "attachment",
                                    email_obj['Attachment'])
-        _, attach_extension = os.path.splitext(attach_path)
+        mime_type, encoding = mimetypes.guess_type(attach_path)
+        if mime_type is None or encoding is not None:
+            mime_type = "application/octet-stream"
+
+        main_type, sub_type = mime_type.split('/', 1)
+
         with open(attach_path, 'r') as attach_fd:
-            attach_raw = MIMEApplication(attach_fd.read(),
-                                         _subtype=attach_extension)
-        attach_raw.add_header('Content-Disposition',
-                              'attachment',
-                              filename=email_obj['Attachment'])
-        email_obj.attach(attach_raw)
+            #email_obj.add_attachment(attach_fd.read(),
+            #                         maintype=main_type,
+            #                         subtype=sub_type,
+            #                         filename=attach_path)
+            attach_raw = MIMEText(attach_fd.read())
+
+            email_obj.attach(attach_raw)
 
     def __enter__(self):
         return self
