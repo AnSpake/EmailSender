@@ -29,6 +29,12 @@ There is 4 commonly used ports.
  - 465: used for SMTPS (SMTP over SSL), depreciated.
  - 2525: unoffical, used when 587 is busy.
 
+# Troubleshooting
+This program might crash if fields From/Sender/To contained international
+characters (see issue #3)
+Fix them by hand for now.
+
+
 # Under construction
 Prerequisite
 > mkcert localhost
