@@ -7,7 +7,6 @@ import email
 import argparse
 from client_smtp import EmailClient
 from email.message import EmailMessage
-from email.mime.multipart import MIMEMultipart
 
 
 def handle_arg():
@@ -41,13 +40,15 @@ def main():
     args = handle_arg()
 
     with EmailClient(args.servername, args.port, secure=args.ssl) as server:
-        for subdir, _, files in os.walk(args.directory):
-            for filename in files:
-                with open(os.path.join(subdir, filename), 'r') as mail_fd:
-                    mail_obj = email.message_from_file(mail_fd,
+        for filename in os.listdir(args.directory):
+            file_path = os.path.join(args.directory, filename)
+
+            if os.path.isfile(file_path):
+                with open(file_path, 'r') as file_fd:
+                    mail_obj = email.message_from_file(file_fd,
                                                        _class=EmailMessage)
                     # Add log
-                    server.sendmail(mail_obj, subdir, args.attachment)
+                    server.sendmail(mail_obj, args)
 
 
 if __name__ == "__main__":
