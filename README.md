@@ -35,3 +35,7 @@ Prerequisite
 
 Launch SSL SMTP Server
 > ./server_smtp.py
+
+# Authors
+Amandine Nassiri <amandine.nassiri@epita.fr>
+https://github.com/AnSpake/EmailSender
