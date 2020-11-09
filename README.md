@@ -31,7 +31,7 @@ There is 4 commonly used ports.
 
 # Troubleshooting
 This program might crash if fields From/Sender/To contained international
-characters (see issue #3)
+characters (see issue #3)  
 Fix them by hand for now.
 
 
@@ -43,5 +43,5 @@ Launch SSL SMTP Server
 > ./server_smtp.py
 
 # Authors
-Amandine Nassiri <amandine.nassiri@epita.fr>
+Amandine Nassiri <amandine.nassiri@epita.fr>  
 https://github.com/AnSpake/EmailSender
